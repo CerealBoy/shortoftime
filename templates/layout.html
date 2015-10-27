@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+  <head lang="en">
+    <title>shortofti.me</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quick and Simple time and task management">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:200">
+
+    <style type="text/css">
+body { color: #333; }
+a { text-decoration: none; color: #1b98f8; }
+.primary-button, .secondary-button { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border-radius: 20px; }
+.primary-button { color: white !important; background-color: rgb(61, 164, 201) !important; margin: 1em 0; }
+.secondary-button { background: #fff; border: 1px solid #ddd; color: #666; padding: 0.5em 2em; font-size: 80%; }
+#layout, #nav, #list, #main { margin: 0; padding: 0; }
+
+#nav { width: 100%; height: 40px; position: relative; background: rgb(37, 42, 58); text-align: center; }
+#nav .nav-menu-button { display: block; top: 0.5em; right: 0.5em; position: absolute; }
+#nav.active { height: 80%; }
+.nav-inner { display: none; }
+#nav.active .nav-inner { display: block; padding: 2em 0; }
+#nav .pure-menu { background: transparent; border: none; text-align: left; }
+#nav .pure-menu-link:hover, #nav .pure-menu-link:focus { background: rgb(55, 60, 90); }
+#nav .pure-menu-link { color: #fff; margin-left: 0.5em; }
+#nav .pure-menu-heading { border-bottom: none; font-size:110%; color: rgb(75, 113, 151); }
+.sot-count { color: rgb(75, 113, 151); }
+.sot-label-open, .sot-label-inprogress, .sot-label-blocked, .sot-label-closed { width: 15px; height: 15px; display: inline-block; margin-right: 0.5em; border-radius: 3px; }
+.sot-label-open { background: #ffc94c; }
+.sot-label-inprogress { background: #41ccb4; }
+.sot-label-blocked { background: #c34065; }
+.sot-label-closed { background: #40c365; }
+.sot-item { padding: 0.9em 1em; border-bottom: 1px solid #ddd; border-left: 6px solid transparent; }
+.sot-avatar { border-radius: 3px; margin-right: 0.5em; }
+.sot-name, .sot-subject { margin: 0; }
+.sot-name { text-transform: uppercase; color: #999; }
+.sot-desc { font-size: 80%; margin: 0.4em 0; }
+.sot-item-selected { background: #eee; }
+.sot-item-unread { border-left: 6px solid #1b98f8; }
+.sot-item-blocked { border-left: 6px solid #c34065; }
+.sot-item-closed { border-left: 6px solid #40c365; }
+.sot-item-inprogress { border-left: 6px solid #41ccb4; }
+.sot-item-open { border-left: 6px solid #ffc94c; }
+.sot-content-header, .sot-content-body, .sot-content-footer { padding: 1em 2em; }
+.sot-content-header { border-bottom: 1px solid #ddd; }
+.sot-content-title { margin: 0.5em 0 0; }
+.sot-content-subtitle { font-size: 1em; margin: 0; font-weight: normal; }
+.sot-content-subtitle span { color: #999; }
+.sot-content-controls { margin-top: 2em; text-align: right; }
+.sot-content-controls .secondary-button { margin-bottom: 0.3em; }
+.sot-avatar { width: 40px; height: 40px; }
+
+@media (min-width: 40em) {
+    #layout { padding-left:500px; position: relative; }
+    #nav, #list { position: fixed; top: 0; bottom: 0; overflow: auto; }
+    #nav { margin-left:-500px; width:150px; height: 100%; }
+    .nav-inner { display: block; padding: 2em 0; }
+    #nav .nav-menu-button { display: none; }
+    #list { margin-left: -350px; width: 100%; height: 33%; border-bottom: 1px solid #ddd; }
+    #main { position: fixed; top: 33%; right: 0; bottom: 0; left: 150px; overflow: auto; width: auto; }
+}
+
+@media (min-width: 60em) {
+    #list { margin-left: -350px; width: 100%; height: 100%; border-right: 1px solid #ddd; }
+    #main { position: static; margin: 0; padding: 0; }
+}
+
+    </style>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  </head>
+  <body id="content">
+
+<!--div id="layout" class="content pure-g">
+
+    <div id="main" class="pure-u-1">
+        <div class="sot-content">
+            <div class="sot-content-header pure-g">
+                <div class="pure-u-1-2">
+                    <h1 class="sot-content-title">Hello from Toronto</h1>
+                    <p class="sot-content-subtitle">
+                        From <a>Tilo Mitra</a> at <span>3:56pm, April 3, 2012</span>
+                    </p>
+                </div>
+
+                <div class="sot-content-controls pure-u-1-2">
+                    <button class="secondary-button pure-button">Reply</button>
+                    <button class="secondary-button pure-button">Forward</button>
+                    <button class="secondary-button pure-button">Move to</button>
+                </div>
+            </div>
+
+            <div class="sot-content-body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+                <p>
+                    Aliquam ac feugiat dolor. Proin mattis massa sit amet enim iaculis tincidunt. Mauris tempor mi vitae sem aliquet pharetra. Fusce in dui purus, nec malesuada mauris. Curabitur ornare arcu quis mi blandit laoreet. Vivamus imperdiet fermentum mauris, ac posuere urna tempor at. Duis pellentesque justo ac sapien aliquet egestas. Morbi enim mi, porta eget ullamcorper at, pharetra id lorem.
+                </p>
+                <p>
+                    Donec sagittis dolor ut quam pharetra pretium varius in nibh. Suspendisse potenti. Donec imperdiet, velit vel adipiscing bibendum, leo eros tristique augue, eu rutrum lacus sapien vel quam. Nam orci arcu, luctus quis vestibulum ut, ullamcorper ut enim. Morbi semper erat quis orci aliquet condimentum. Nam interdum mauris sed massa dignissim rhoncus.
+                </p>
+                <p>
+                    Regards,<br>
+                    Tilo
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div-->
+
+    <script src="/res/react-with-addons.js"></script>
+    <script src="/res/JSXTransformer.js"></script>
+    <script src="/res/marked.min.js"></script>
+    <script src="/res/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <script type="text/jsx">
+
+var Item = React.createClass({
+  render: function() {
+    var rawContent = marked(this.props.content.toString(), {sanitize: true}),
+        rawName = marked(this.props.name.toString(), {sanitize: true}),
+        rawTitle = marked(this.props.title.toString(), {sanitize: true});
+    return (
+      <div className="sot-item {this.props.class} pure-g">
+        <div className="pure-u-3-4">
+          <h5 className="sot-name" dangerouslySetInnerHTML={{__html: rawName}} />
+          <h4 className="sot-subject" dangerouslySetInnerHTML={{__html: rawTitle}} />
+          <p className="sot-desc" dangerouslySetInnerHTML={{__html: rawContent}} />
+        </div>
+      </div>
+    )
+  }
+}),
+
+ItemBox = React.createClass({
+  loadItemsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  handleItemSubmit: function(item) {
+    var items = this.state.data;
+    items.push(item);
+    this.setState({data: items, function() {
+      $.ajax({
+        url: this.props.url,
+        dataType: 'json',
+        cache: false,
+        type: 'POST',
+        data: item,
+        success: function(data) {
+          this.setState({data: data});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    }});
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    this.loadItemsFromServer();
+    setInterval(this.loadItemsFromServer, this.props.pollInterval);
+  },
+  render: function() {
+    return (
+      <div className="pure-g content" id="layout">
+        <ItemNav data={this.state.data} />
+        <ItemList data={this.state.data} />
+        <ItemForm onCommentSubmit={this.handleItemSubmit} />
+      </div>
+    );
+  }
+}),
+
+ItemList = React.createClass({
+  render: function() {
+    var itemNodes = this.props.data.map(function(item, index) {
+      return (
+        <Item name={item.name} title={item.title} content={item.content} key={index} />
+      );
+    });
+    return (
+      <div id="list" className="pure-u-1">
+        {itemNodes}
+      </div>
+    );
+  }
+}),
+
+ItemForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var title = React.findDOMNode(this.refs.title).value.trim();
+    console.log(title);
+  },
+  render: function() {
+    return (
+      <form className="itemForm" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="Title" ref="title" />
+        <input type="submit" value="Add" />
+      </form>
+    );
+  }
+}),
+
+ItemNav = React.createClass({
+  render: function() {
+    return (
+      <div id="nav" className="pure-u">
+        <a href="#" className="nav-menu-button">Menu</a>
+
+        <div className="nav-inner">
+          <button className="primary-button pure-button">New Item</button>
+
+          <div className="pure-menu">
+            <ul className="pure-menu-list">
+              <li className="pure-menu-heading">Options</li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Invite</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Share</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Settings</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link">Logout</a></li>
+              <li className="pure-menu-heading">Labels</li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link"><span className="sot-label-open"></span>Open</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link"><span className="sot-label-inprogress"></span>In Progress</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link"><span className="sot-label-blocked"></span>Blocked</a></li>
+              <li className="pure-menu-item"><a href="#" className="pure-menu-link"><span className="sot-label-closed"></span>Closed</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+React.render(
+  <ItemBox url="items.json" pollInterval={2000} />,
+  document.getElementById('content')
+);
+
+    </script>
+
+  </body>
+</html>
+
